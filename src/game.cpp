@@ -166,10 +166,9 @@ void Game::setGameState(const Bacon2D::State &state)
 
     m_state = state;
 
-    if (m_state == Bacon2D::Running)
-        this->currentScene()->setRunning(true);
-    else
-        this->currentScene()->setRunning(false);
+    if (this->currentScene()) {
+        this->currentScene()->setRunning(m_state == Bacon2D::Running);
+    }
 
     emit gameStateChanged();
 }
@@ -294,6 +293,9 @@ void Game::pushScene(Scene *scene)
     if(scene->viewport()){
         scene->viewport()->setZ(m_sceneStack.size());
     }
+
+
+    scene->setRunning(m_state == Bacon2D::Running);
 
     attachScene(scene);
     if(!triggerEnterAnimation(scene)){

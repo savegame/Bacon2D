@@ -260,6 +260,7 @@ Game *Scene::game() const
 void Scene::setGame(Game *game)
 {
     m_game = game;
+    emit gameChanged();
 }
 
 /*!
